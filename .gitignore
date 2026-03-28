@@ -25,12 +25,3 @@ dist-ssr
 <<<<<<< HEAD
 =======
 
-# uploads (IMPORTANT)
-myprofile-backend/uploads/
-uploads/
-
-# large media
-*.mov
-*.mp4
-*.avi
->>>>>>> 84e0757772f2ad2aabec241df40c42d16a76e513

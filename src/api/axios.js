@@ -2,7 +2,7 @@ import axios from "axios";
 import { logError, logInfo } from "../utils/logger";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://roomdekhobackend-3.onrender.com/api",
 });
 
 // ✅ REQUEST INTERCEPTOR (AUTO TOKEN)
@@ -59,5 +59,5 @@ API.interceptors.response.use(
   }
 );
 
-export const IMAGE_URL = "http://localhost:5000/uploads";
+export const IMAGE_URL = "https://roomdekhobackend-3.onrender.com/uploads";
 export default API;
