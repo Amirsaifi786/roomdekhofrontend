@@ -65,7 +65,7 @@ const PropertyDetail = () => {
     try {
 
       await API.post("/message/send-message", {
-        property_id: property.id,
+        property_id: property._id,
         message
       });
 
@@ -152,29 +152,25 @@ const PropertyDetail = () => {
 
       {/* VIDEO */}
 
-      {video && (
+     {video && video !== "" && (
+  <div className="video-section mb-5 text-center">
 
-        <div className="video-section mb-5 text-center">
+    <h4 className="section-title">Video Walkthrough</h4>
 
-          <h4 className="section-title">Video Walkthrough</h4>
+    <div className="video-card">
 
-          <div className="video-card">
+      <video controls style={{ width: "100%", maxHeight: "400px", borderRadius: "12px" }}>
+        <source
+          src={`${IMAGE_URL}/${video}`}
+          type="video/mp4"
+        />
+        Your browser does not support the video tag.
+      </video>
 
-            <video controls>
+    </div>
 
-              <source
-                src={`${IMAGE_URL}/${video}`}
-                type="video/mp4"
-              />
-
-            </video>
-
-          </div>
-
-        </div>
-
-      )}
-
+  </div>
+)}
       <div className="row">
 
         {/* LEFT */}

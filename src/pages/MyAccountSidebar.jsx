@@ -1,71 +1,61 @@
-import React from 'react'
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+
 export default function MyAccountSidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
+
   return (
+    <div className="card shadow-sm">
+      <div className="card-body p-3">
 
-    <div className="col-md-3">
+        <h6 className="text-muted fw-bold mb-3">Manage Properties</h6>
 
-      <div className="border p-3 bg-light">
+        <div className="list-group mb-3">
+          <Link to="/my-properties" className={`list-group-item list-group-item-action ${isActive("/my-properties") ? "active" : ""}`}>
+            🏠 My Properties
+          </Link>
 
-        <h6 className="mb-3">Manage Your Ad</h6>
+          <Link to="/submit-property" className={`list-group-item list-group-item-action ${isActive("/submit-property") ? "active" : ""}`}>
+            ➕ Submit Property
+          </Link>
 
-        <ul className="list-unstyled">
+          <Link to="/my-bookmarks" className={`list-group-item list-group-item-action ${isActive("/my-bookmarks") ? "active" : ""}`}>
+            🔖 Bookmarks
+          </Link>
 
-          {/* <li className="mb-2 text-orange">
-            <Link to="/my-responses">View Response</Link>
-          </li> */}
-          <li className="mb-2">
-            <Link to="/my-properties">My Properties</Link>
-          </li>
+          <Link to="/location" className={`list-group-item list-group-item-action ${isActive("/location") ? "active" : ""}`}>
+            📍 Locations
+          </Link>
+        </div>
 
-          <li className="mb-2">
-            <Link to="/submit-property">Submit New Property</Link>
-          </li>
+        <h6 className="text-muted fw-bold mb-3">Account</h6>
 
-          <li className="mb-3">
-            <Link to="/my-bookmarks">Bookmarked Listings</Link>
-          </li>
-           <li className="mb-3">
-            <Link to="/location">Location Listings</Link>
-          </li>
+        <div className="list-group">
+          <Link to="/my-profile" className={`list-group-item list-group-item-action ${isActive("/my-profile") ? "active" : ""}`}>
+            👤 My Profile
+          </Link>
 
-        </ul>
+          <Link to="/change-password" className={`list-group-item list-group-item-action ${isActive("/change-password") ? "active" : ""}`}>
+            🔒 Change Password
+          </Link>
 
-        <hr />
-
-        <h6 className="mb-3">Manage Account</h6>
-
-        <ul className="list-unstyled">
-
-          <li className="mb-2"><Link to="/my-profile">My Profile</Link></li>
-          <li className="mb-2"><Link to="/change-password">Change Password</Link></li>
-
-          <li
-            className="mb-2"
-            style={{ cursor: "pointer" }}
+          <button
+            className="list-group-item list-group-item-action text-danger"
             onClick={() => {
               localStorage.removeItem("user");
               localStorage.removeItem("token");
-
               window.dispatchEvent(new Event("authChanged"));
-
               navigate("/myprofile");
             }}
           >
-            Log Out
-          </li>
-
-        </ul>
+            🚪 Logout
+          </button>
+        </div>
 
       </div>
-
     </div>
-
-
-
-
-  )
+  );
 }

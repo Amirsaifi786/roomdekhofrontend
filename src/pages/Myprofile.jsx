@@ -7,12 +7,10 @@ import ForgotPassword from "../components/ForgotPassword";
 
 const Myprofile = () => {
   const navigate = useNavigate();
-
   const [activeTab, setActiveTab] = useState("register");
   const [emailOTP, setEmailOTP] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
-
   const [registerData, setRegisterData] = useState({
     firstName: "",
     lastName: "",

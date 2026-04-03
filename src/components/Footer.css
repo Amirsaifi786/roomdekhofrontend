@@ -10,12 +10,10 @@
   cursor: pointer;
 }
 
-.footer-main{
-background: linear-gradient(165deg, #005bb6 10%, #005bb6 10%, #ffffff 5%, #ffffff 20%, #005bb6 50%, #6e8092 75%, #0b5fb2 5%, #ffffff 100%);
-position:relative;
-overflow:hidden;
+.footer-main {
+  background: linear-gradient(135deg, #e4874a 0%, #1d4ed8 50%, #3b82f6 100%);
+  color: #fff;
 }
-
 /* light pattern effect */
 .footer-main::before{
 content:"";

@@ -1,4 +1,4 @@
-/* ----- CORE ----- */
+@import "tailwindcss";
 .home-wrapper {
     font-family: 'Varela Round', sans-serif;
     color: #707070;

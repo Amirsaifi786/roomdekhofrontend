@@ -234,10 +234,13 @@ const fetchProperty = async (id) => {
         data.append("features", JSON.stringify(selectedFeatures));
         data.append("existingImages", JSON.stringify(existingImages));
         data.append("existingVideo", videoUrl || "");
-        data.append("user_id", user?.id || "");
+        data.append("user_id", user?._id);
 
         images.forEach(img => data.append("images", img));
-
+        if (!user || !user._id) {
+            toast.error("User not logged in properly");
+            return;
+        }
         if (video) {
             data.append("video", video);
         }

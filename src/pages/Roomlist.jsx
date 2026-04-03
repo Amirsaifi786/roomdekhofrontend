@@ -34,7 +34,7 @@ const Roomlist = () => {
     // PG TYPES
     return {
       type: "pg",
-      pgType: slug.toLowerCase().trim() 
+      pgType: slug.toLowerCase().trim()
     };
   };
   /* ================= STATES ================= */
@@ -56,56 +56,73 @@ const Roomlist = () => {
 
   /* ================= FETCH API ================= */
 
-  useEffect(() => {
-    const fetchProperties = async () => {
-      setLoading(true);
+useEffect(() => {
+  const fetchProperties = async () => {
+    setLoading(true);
 
-      try {
-        const params = new URLSearchParams();
-        if (locationSlug) {
-          params.append("location", locationSlug);
-        }
+    try {
+      const params = new URLSearchParams();
 
-        const slugFilters = slug ? parseSlug(slug) : {};
+      // ✅ LOCATION
+      if (locationSlug) params.append("location", locationSlug);
 
-        if (slugFilters.type)
-  params.append("propertyType", slugFilters.type);
+      // ✅ SLUG PARSE
+      const slugFilters = slug ? parseSlug(slug) : {};
 
-if (filters.type)
-  params.append("propertyType", filters.type);
-        // if (slugFilters.type)
-        //   params.append("type", slugFilters.type);
+      // ================= SLUG FILTER =================
 
-        if (slugFilters.rooms)
-          params.append("rooms", Number(slugFilters.rooms));
-
-        if (slugFilters.pgType)
-          params.append("pgType", slugFilters.pgType);
-
-        if (filters.location) params.append("location", filters.location);
-
-        if (filters.type) params.append("type", filters.type);
-
-        if (filters.rooms) params.append("rooms", Number(filters.rooms));
-
-        if (filters.baths) params.append("baths", Number(filters.baths));
-
-        params.append("page", page);
-        params.append("limit", 6);
-
-        const res = await API.get(`/property/all-properties?${params.toString()}`);
-        setProperties(res.data.data || []);
-        setTotalPages(res.data.totalPages || 1);
-      } catch (err) {
-        console.log(err);
+      if (slugFilters.type) {
+        params.append("type", slugFilters.type); // ✅ FIXED
       }
 
-      setLoading(false);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    };
+      if (slugFilters.rooms) {
+        params.append("rooms", Number(slugFilters.rooms));
+      }
 
-    fetchProperties();
-  }, [slug, filters, page]);
+      if (slugFilters.pgType) {
+        params.append("pgType", slugFilters.pgType);
+      }
+
+      // ================= FORM FILTER =================
+
+      if (filters.location) {
+        params.append("location", filters.location);
+      }
+
+      if (filters.type) {
+        params.append("type", filters.type); // ✅ FIXED
+      }
+
+      if (filters.rooms) {
+        params.append("rooms", Number(filters.rooms));
+      }
+
+      if (filters.baths) {
+        params.append("baths", Number(filters.baths));
+      }
+
+      // ================= PAGINATION =================
+
+      params.append("page", page);
+      params.append("limit", 6);
+
+      console.log("API PARAMS:", params.toString()); // 🔥 DEBUG
+
+      const res = await API.get(`/property/all-properties?${params.toString()}`);
+
+      setProperties(res.data.data || []);
+      setTotalPages(res.data.totalPages || 1);
+
+    } catch (err) {
+      console.log("FETCH ERROR:", err);
+    }
+
+    setLoading(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  fetchProperties();
+}, [slug, filters, page, locationSlug]);
   /* ================= HANDLERS ================= */
 
   const handleFormChange = (e) => {

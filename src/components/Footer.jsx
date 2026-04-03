@@ -46,6 +46,7 @@ function Footer() {
               </h4>
               <ul className="list-unstyled">
                 {[
+                  { name: "Home", path: "/" },
                   { name: "My Account", path: "/account" },
                   { name: "Post your property", path: "/submit-property" },
                   // { name: "Room Partners", path: "/room-partners" },
@@ -101,7 +102,8 @@ function Footer() {
                   { icon: 'fa-facebook-f' },
                   { icon: 'fa-twitter' },
                   { icon: 'fa-linkedin-in' },
-                  { icon: 'fa-instagram' }
+                  { icon: 'fa-instagram' },
+                  // { icon: 'fa-pinterest' }
                 ].map((social, i) => (
                   <a
                     key={i}

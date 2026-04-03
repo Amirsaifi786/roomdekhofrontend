@@ -1,7 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Contact.css";
+import API from "../api/axios";
+import { toast } from "react-toastify";
 
 const Contact = () => {
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: ""
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  // handle input change
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  // submit form
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+
+      const res = await API.post("/message/send-mail", formData);
+
+      toast.success(res.data.message);
+
+      // reset form
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: ""
+      });
+
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div>
 
@@ -72,49 +117,75 @@ const Contact = () => {
           {/* CONTACT FORM */}
           <div className="col-md-8">
 
-            <div className="contact-form">
+           
+        <div className="row g-5">
 
+     
+
+
+          {/* CONTACT FORM */}
+        <section className="contact-section container">
+
+        <div className="row g-5">
+
+          <div className="col-md-12">
+            <div className="contact-form">
               <h3 className="mb-4">Send Message</h3>
 
-              <form>
+              <form onSubmit={handleSubmit}>
 
                 <div className="row">
 
                   <div className="col-md-6 mb-3">
                     <input
                       type="text"
+                      name="name"
                       className="form-control"
                       placeholder="Your Name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
                     />
                   </div>
 
                   <div className="col-md-6 mb-3">
                     <input
                       type="email"
+                      name="email"
                       className="form-control"
                       placeholder="Email Address"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
                     />
                   </div>
 
                   <div className="col-md-12 mb-3">
                     <input
                       type="text"
+                      name="subject"
                       className="form-control"
                       placeholder="Subject"
+                      value={formData.subject}
+                      onChange={handleChange}
                     />
                   </div>
 
                   <div className="col-md-12 mb-3">
                     <textarea
+                      name="message"
                       className="form-control"
                       rows="5"
                       placeholder="Message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
                     ></textarea>
                   </div>
 
                   <div className="col-md-12">
-                    <button className="btn btn-contact">
-                      Send Message
+                    <button className="btn btn-contact" disabled={loading}>
+                      {loading ? "Sending..." : "Send Message"}
                     </button>
                   </div>
 
@@ -123,6 +194,14 @@ const Contact = () => {
               </form>
 
             </div>
+          </div>
+
+        </div>
+
+      </section>
+
+
+        </div>
 
           </div>
 

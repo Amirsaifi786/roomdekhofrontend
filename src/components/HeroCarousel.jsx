@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../api/axios"; 
+import API from "../api/axios";
 
 import slider1 from "../assets/images/slider1.png";
 import slider2 from "../assets/images/slider2.png";
@@ -14,7 +14,7 @@ function HeroCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
-const [selectedType, setSelectedType] = useState("");
+  const [selectedType, setSelectedType] = useState("");
   const slides = [
     { id: 1, bgImage: slider2 },
     { id: 2, bgImage: slider1 },
@@ -52,61 +52,33 @@ const [selectedType, setSelectedType] = useState("");
       .replace(/[^\w-]+/g, "");
   };
 
-  // SEARCH CLICK
-// const handleSearch = (e) => {
+  const handleSearch = (e) => {
 
-//   e.preventDefault();
+    e.preventDefault();
 
-//   let url = "/property";
-//   const params = new URLSearchParams();
+    let url = "/property";
+    const params = new URLSearchParams();
 
-//   if (selectedLocation) {
+    if (selectedLocation) {
+      const slug = selectedLocation
+        .toLowerCase()
+        .replace(/\s+/g, "-");
 
-//     const slug = selectedLocation
-//       .toLowerCase()
-//       .replace(/\s+/g, "-");
+      url = `/location/${slug}`;
+    }
 
-//     url = `/property/${slug}`;
-//   }
+    if (selectedType) {
+      params.append("type", selectedType);
+    }
 
-//   if (selectedType) {
-//     params.append("/", selectedType);
-//   }
+    if (params.toString()) {
+      url += `/${selectedType}`;
+    }
 
-//   if (params.toString()) {
-//     url += `/${params.toString()}`;
-//   }
-
-//   navigate(url);
-
-// };
-const handleSearch = (e) => {
-
-  e.preventDefault();
-
-  let url = "/property";
-  const params = new URLSearchParams();
-
-  if (selectedLocation) {
-    const slug = selectedLocation
-      .toLowerCase()
-      .replace(/\s+/g, "-");
-
-    url = `/location/${slug}`;
-  }
-
-  if (selectedType) {
-    params.append("type", selectedType);
-  }
-
-  if (params.toString()) {
-    url += `/${selectedType}`;
-  }
-
-  navigate(url);
-};
+    navigate(url);
+  };
   return (
-    <div  className="parallax"
+    <div className="parallax"
       style={{
         backgroundImage: `url(${slides[activeIndex].bgImage})`,
         backgroundSize: "cover",
@@ -119,66 +91,66 @@ const handleSearch = (e) => {
         style={{ paddingTop: "120px" }}
       >
 
-        <h2 className="display-4 fw-bold mb-4">
+        <h2 className="display-4 fw-bold mb-4 hover:scale-105 transition-transform duration-100 hover: text-blue-600">
           Find Your Dream Home
         </h2>
 
-      
-      <form onSubmit={handleSearch}>
-  <div className="row g-2 with-forms justify-content-center">
 
-    {/* PROPERTY TYPE */}
-    <div className="col-md-3">
-      <select
-        className="form-select custom-input"
-        value={selectedType}
-        onChange={(e) => setSelectedType(e.target.value)}
-      >
+        <form onSubmit={handleSearch}>
+          <div className="row g-2 with-forms justify-content-center">
 
-        <option value="">Any type</option>
-        <option value="all-houses">Houses</option>
-        <option value="all-flats">Flats</option>
-        <option value="all-pg">Boys/Girls PG</option>
-        {/* <option value="Girls PG">Girls PG</option> */}
+            {/* PROPERTY TYPE */}
+            <div className="col-md-3">
+              <select
+                className="form-select custom-input"
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
+              >
 
-      </select>
-    </div>
+                <option value="">Any type</option>
+                <option value="all-houses">Houses</option>
+                <option value="all-flats">Flats</option>
+                <option value="all-pg">Boys/Girls PG</option>
+                {/* <option value="Girls PG">Girls PG</option> */}
 
-    {/* LOCATION */}
-    <div className="col-md-7">
-      <select
-        className="form-select custom-input"
-        value={selectedLocation}
-        onChange={(e) => setSelectedLocation(e.target.value)}
-      >
+              </select>
+            </div>
 
-        <option value="">Anywhere in Jaipur</option>
+            {/* LOCATION */}
+            <div className="col-md-7">
+              <select
+                className="form-select custom-input"
+                value={selectedLocation}
+                onChange={(e) => setSelectedLocation(e.target.value)}
+              >
 
-        {locations.map((loc) => (
-          <option key={loc.id} value={loc.title}>
-            {loc.title}
-          </option>
-        ))}
+                <option value="">Anywhere in Jaipur</option>
 
-      </select>
-    </div>
+                {locations.map((loc) => (
+                  <option key={loc.id} value={loc.title}>
+                    {loc.title}
+                  </option>
+                ))}
 
-    {/* SEARCH */}
-    <div className="col-md-auto">
-      <button className="btn custom-input btn-primary">
-        <i className="fa-solid fa-magnifying-glass" />
-      </button>
-    </div>
+              </select>
+            </div>
 
-  </div>
-</form>
+            {/* SEARCH */}
+            <div className="col-md-auto m-3">
+              <button className="btn custom-input btn-primary">
+                <i className="fa-solid fa-magnifying-glass" />
+              </button>
+            </div>
 
-                  <div className="adv-search-btn mt-3">
-                    Need more search options?{' '}
-                    <a href="#" className="text-white text-decoration-underline">
-                      Advanced Search
-                    </a>
-                  </div>
+          </div>
+        </form>
+
+        <div className="adv-search-btn mt-3">
+          Need more search options?{' '}
+          <a href="#" className="text-white text-decoration-underline">
+            Advanced Search
+          </a>
+        </div>
 
       </div>
     </div>

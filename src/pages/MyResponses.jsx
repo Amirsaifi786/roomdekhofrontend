@@ -1,34 +1,32 @@
 import React from "react";
 import MyAccountSidebar from "./MyAccountSidebar";
-function MyResponses() {
+import { Link } from "react-router-dom";
+
+export default function MyResponses() {
   return (
-    <div>
+    <div className="container mt-4">
+      <div className="row">
 
-      {/* PAGE TITLE */}
-      <div style={{ background: "#6c6c6c", padding: "40px 0", color: "white" }}>
-        <div className="container">
-          <h2>My Responses</h2>
+        <div className="col-md-3">
+          <MyAccountSidebar />
         </div>
-      </div>
 
-      <div className="container py-5">
-        <div className="row">
-          < MyAccountSidebar />
-          {/* RIGHT CONTENT */}
-          <div className="col-md-9">
+        <div className="col-md-9">
+          <div className="card shadow-sm text-center p-5">
 
-            <div className="alert alert-danger">
+            <h4>No Responses Yet</h4>
+            <p className="text-muted">
+              You will start receiving inquiries once you list a property.
+            </p>
 
-              Please, <b>Submit Property</b> to see responses.
-
-            </div>
+            <Link to="/submit-property" className="btn btn-primary">
+              ➕ Submit Property
+            </Link>
 
           </div>
         </div>
-      </div>
 
+      </div>
     </div>
   );
 }
-
-export default MyResponses;
